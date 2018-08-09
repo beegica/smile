@@ -16,20 +16,20 @@ import time
 import threading
 
 # kivy imports
-import kivy_overrides
+import smile.kivy_overrides as kivy_overrides
 import kivy
 import kivy.base
 from kivy.utils import platform
 import kivy.clock
 
-# local imports
-from state import Serial, AutoFinalizeState, Log
-from ref import Ref
-from clock import clock
-from log import LogWriter, log2csv
-from event import event_time
-from scale import scale
-import version
+
+from .state import Serial, AutoFinalizeState
+from .ref import Ref
+from .clock import clock
+from .log import LogWriter, log2csv
+from .event import event_time
+from .scale import scale
+import smile.version as version
 
 
 _kivy_clock = kivy.clock.Clock
@@ -311,15 +311,11 @@ class Experiment(object):
             self._fullscreen = fullscreen
         self._resolution = self._resolution or resolution
 
-        # set scale box
-        scale._set_scale_box(scale_box=scale_box, scale_up=scale_up,
-                             scale_down=scale_down)
-
         # process background color
         self._background_color = background_color
 
         # make custom experiment app instance
-        #self._app = ExpApp(self)
+        # self._app = ExpApp(self)
         self._screen = Screen()
         self._app = None
 
@@ -329,7 +325,6 @@ class Experiment(object):
         # set up initial root state and parent stack
         # interacts with Meanwhile and UntilDone at top of experiment
         ss = Serial(name="EXPERIMENT BODY", parent=self)
-
 
         self._root_state.set_instantiation_context(self)
         self._parents = [self._root_state]
@@ -347,30 +342,30 @@ class Experiment(object):
         self._sysinfo_slog = os.path.join(self._session_dir,
                                           "sysinfo.slog")
         self._sysinfo = kivy_overrides._get_config()
-        self._sysinfo.update({"fullscreen":self._fullscreen,
-                              "data_time":self._session,
-                              "debug":self._debug,
-                              "resolution":self._resolution,
-                              "background_color":self._background_color,
-                              "scale_box":scale_box,
-                              "scale_up":scale_up,
-                              "scale_down":scale_down,
-                              "expname":name,
-                              "processor":pf.processor(),
-                              "python_version":pf.python_version(),
-                              "system":pf.system(),
-                              "version":version.__version__,
-                              "author":version.__author__,
-                              "email":version.__email__,
-                              "date_last_update":version.__date__,
-                              "uname":pf.uname()})
-
+        self._sysinfo.update({"fullscreen": self._fullscreen,
+                              "data_time": self._session,
+                              "debug": self._debug,
+                              "resolution": self._resolution,
+                              "background_color": self._background_color,
+                              "scale_box": scale_box,
+                              "scale_up": scale_up,
+                              "scale_down": scale_down,
+                              "expname": name,
+                              "processor": pf.processor(),
+                              "python_version": pf.python_version(),
+                              "system": pf.system(),
+                              "version": version.__version__,
+                              "author": version.__author__,
+                              "email": version.__email__,
+                              "date_last_update": version.__date__,
+                              "uname": pf.uname()})
 
         # place to save experimental variables
         self._vars = {}
         self.__issued_refs = weakref.WeakValueDictionary()
 
-        self._reserved_data_filenames = set(os.listdir(os.path.join(self._session_dir)))
+        self._reserved_data_filenames = set(os.listdir(
+                                            os.path.join(self._session_dir)))
         self._reserved_data_filenames_lock = threading.Lock()
         self._state_loggers = {}
 
@@ -394,7 +389,6 @@ class Experiment(object):
         for filename, logger in self._state_loggers.itervalues():
             logger.close()
             os.remove(filename)
-
 
         self._reserved_data_filenames = set(os.listdir(self._session_dir))
         self._reserved_data_filenames_lock = threading.Lock()
@@ -494,11 +488,11 @@ class Experiment(object):
         Construct a unique filename for a data file in the log directory.  The
         filename will incorporate the specified 'title' string and it will have
         extension specified with 'ext' (without the dot, if not None).  The
-        filename will also incorporate a time-stamp and a number to disambiguate
-        data files with the same title, extension, and time-stamp.  The filename
-        is not a file path.  The filename will be distinct from all filenames
-        previously returned from this method even if a file of that name has
-        not yet been created in the log directory.
+        filename will also incorporate a time-stamp and a number to
+        disambiguate data files with the same title, extension, and time-stamp.
+        The filename is not a file path.  The filename will be distinct from
+        all filenames previously returned from this method even if a file of
+        that name has not yet been created in the log directory.
 
         Returns the new filename.
         """
@@ -507,7 +501,7 @@ class Experiment(object):
                                                     time.gmtime()))
         with self._reserved_data_filenames_lock:
             self._reserved_data_filenames |= set(os.listdir(self._session_dir))
-            for distinguisher in xrange(256):
+            for distinguisher in range(256):
                 if ext is None:
                     filename = "%s_%d" % (title, distinguisher)
                 else:
@@ -517,7 +511,8 @@ class Experiment(object):
                     return os.path.join(self._session_dir, filename)
             else:
                 raise RuntimeError(
-                    "Too many data files with the same title, extension, and timestamp!")
+                    "Too many data files with the same title, extension, " +
+                    "and timestamp!")
 
     def setup_state_logger(self, state_class_name):
         if state_class_name in self._state_loggers:
@@ -613,7 +608,7 @@ class Experiment(object):
             # self._root_executor.enter(clock.now() + 0.25)
 
             # kivy main loop
-            from main import SmileApp
+            from .main import SmileApp
             self._app = SmileApp(self)
             self._app.run()
 
@@ -680,6 +675,6 @@ class Set(AutoFinalizeState):
 
 if __name__ == '__main__':
     # can't run inside this file
-    #exp = Experiment(fullscreen=False, pyglet_vsync=False)
-    #exp.run()
+    # exp = Experiment(fullscreen=False, pyglet_vsync=False)
+    # exp.run()
     pass
