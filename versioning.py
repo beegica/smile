@@ -55,7 +55,7 @@ def main():
                 "author": subprocess.check_output(['git', 'log', '--pretty=format:"%an"', '-1']),
                 "email": subprocess.check_output(['git', 'log', '--pretty=format:"%ae"', '-1'])
             }
-            for k, v in subst_list.iteritems():
+            for k, v in iter(subst_list.items()):
                 v = re.sub(r'[\n\r\t"\']', "", v)
                 rexp = "__%s__\s*=[\s'\"]+" % k
                 line = re.sub(rexp, "__%s__ = \"%s\"\n" % (k, v), line)
