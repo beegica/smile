@@ -12,7 +12,7 @@ import versioneer
 commands = versioneer.get_cmdclass().copy()
 
 setup(name='smile',
-      version=version=versioneer.get_version(),
+      version=versioneer.get_version(),
       packages=['smile'],
       package_dir={"smile": "smile"},
       package_data={"smile": ["face-smile.png",
