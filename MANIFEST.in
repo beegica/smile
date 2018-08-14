@@ -1,0 +1,2 @@
+include versioneer.py
+include smile/_version.py

@@ -8,9 +8,11 @@
 ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ##
 
 from distutils.core import setup
+import versioneer
+commands = versioneer.get_cmdclass().copy()
 
 setup(name='smile',
-      version='0.1.0',
+      version=version=versioneer.get_version(),
       packages=['smile'],
       package_dir={"smile": "smile"},
       package_data={"smile": ["face-smile.png",
@@ -20,4 +22,5 @@ setup(name='smile',
       author=['Per B. Sederberg'],
       maintainer=['Per B. Sederberg'],
       maintainer_email=['psederberg@gmail.com'],
-      url=['http://github.com/compmem/smile'])
+      url=['http://github.com/compmem/smile'],
+      cmdclass=commands)
