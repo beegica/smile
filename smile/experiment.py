@@ -9,7 +9,6 @@
 
 # import main modules
 import os
-import platform as pf
 
 import weakref
 import time
@@ -22,14 +21,20 @@ import kivy.base
 from kivy.utils import platform
 import kivy.clock
 
+<<<<<<< HEAD
 
+=======
+# local imports
+>>>>>>> Edited some files
 from .state import Serial, AutoFinalizeState
 from .ref import Ref
 from .clock import clock
 from .log import LogWriter, log2csv
 from .event import event_time
 from .scale import scale
-import smile.version as version
+
+#--EDITED 6.14.18--
+#from state import StateClass
 
 
 _kivy_clock = kivy.clock.Clock
@@ -296,7 +301,7 @@ class Experiment(object):
 
     """
     def __init__(self, fullscreen=None, resolution=None,
-                 scale_box=None, scale_up=False, scale_down=False,
+                 scale_box=[800, 600], scale_up=False, scale_down=True,
                  background_color=None, name="SMILE", debug=False, Touch=None,
                  show_splash=True):
 
@@ -332,7 +337,7 @@ class Experiment(object):
             Touch = (platform == "android") or (platform == "ios")
 
         if show_splash:
-            from startup import Splash
+            from .startup import Splash
             Splash(Touch=Touch, parent=ss)
 
         if self._monitor:

@@ -7,17 +7,18 @@
 #
 # ## ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ##
 
-from kivy_overrides import Config as KOConfig
-import kivy_overrides as KO
-from state import Subroutine, Parallel, Serial, Loop, If, Else, Elif, \
+from .kivy_overrides import Config as KOConfig
+import smile.kivy_overrides as KO
+from .state import Subroutine, Parallel, Serial, Loop, If, Else, Elif, \
                   UntilDone, ResetClock, Func, Wait, Debug
-from video import Rectangle, ProgressBar, Label, UpdateWidget, \
+from .video import Rectangle, ProgressBar, Label, UpdateWidget, \
                   CheckBox, TextInput, ButtonPress, Button, Image
-from keyboard import KeyPress
-from ref import Ref
-from mouse import MouseCursor
-from scale import scale as s
-import version
+
+from .keyboard import KeyPress
+from .ref import Ref
+from .mouse import MouseCursor
+from .scale import scale as s
+import smile.version as version
 
 import os
 
@@ -39,19 +40,18 @@ TEXT_INPUT_WIDTH = 300
 TEXT_INPUT_HEIGHT = 50
 INFO_FONT_SIZE = 30
 SSI_FONT_SIZE = 40
-VERSION_FONT_SIZE=30
+VERSION_FONT_SIZE = 30
 CHECK_HEIGHT = 25
 CHECK_WIDTH = 25
 LOCK_ON = "lock.png"
 LOCK_OFF = "unlock.png"
 
 
-
-
 def set_flip_interval(fps):
     from experiment import Experiment
     exp = Experiment._last_instance()
     exp._app.flip_interval = 1./fps
+
 
 @Subroutine
 def FrameTest(self,
@@ -98,6 +98,7 @@ def FrameTest(self,
 
 def calc_density(height, width, heightcm, widthcm):
     return (((height/heightcm)+(width/widthcm)) * 2.54 / 2.0) / 96.
+
 
 @Subroutine
 def ConfigWindow(self):
@@ -474,7 +475,7 @@ def InputSubject(self, exp_title="DefaultExperiment"):
 if __name__ == "__main__":
 
 
-    from experiment import Experiment
+    from .experiment import Experiment
 
     exp = Experiment(background_color=(.35, .35, .35, 1.0),
                      Touch=False, debug=True,
