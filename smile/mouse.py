@@ -62,6 +62,7 @@ def MouseWithin(widget, pos=None):
     return ((mousePos[0] >= widget.x) & (mousePos[1] >= widget.y) &
             (mousePos[0] <= widget.right) & (mousePos[1] <= widget.top))
 
+
 def MousePos(widget=None):
     """Returns the position of the mouse.
 
@@ -184,34 +185,27 @@ class MouseCursor(VisualState):
 
         self._log_attrs.extend(["filename", "offset"])
 
-<<<<<<< HEAD
-=======
         #@FIX: added scale
-        if scale==0:
+        if scale == 0:
             self.__scale = scale
         else:
-            self.__scale=scale
-            self._init_offset=tuple([self.__scale*x for x in self._init_offset])
+            self.__scale = scale
+            self._init_offset = tuple([self.__scale*x
+                                       for x in self._init_offset])
 
-
->>>>>>> Edited some files
     def _enter(self):
         super(MouseCursor, self)._enter()
         self.__pos_ref = self._exp.screen.mouse_pos
         texture = Image(self._filename).texture
-<<<<<<< HEAD
-        self.__instruction = kivy.graphics.Rectangle(texture=texture,
-                                                     size=tuple([self._scale*x for x in texture.size]))
-=======
+
 
         #@FIX: added if else statement to check for scaling
-        if self.__scale==0:
+        if self.__scale == 0:
             self.__instruction = kivy.graphics.Rectangle(texture=texture,
-                                                     size=texture.size)
+                                                         size=texture.size)
         else:
             self.__instruction = kivy.graphics.Rectangle(texture=texture,
-                                                     size=tuple([self.__scale*x for x in texture.size]))
->>>>>>> Edited some files
+                                                         size=tuple([self.__scale*x for x in texture.size]))
 
     def show(self):
         try:

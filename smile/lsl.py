@@ -10,7 +10,7 @@
 from .state import CallbackState, Wait, Parallel, Loop
 from .video import Label
 from .clock import clock
-from .pylsl import StreamInfo, StreamOutlet
+from pylsl import StreamInfo, StreamOutlet
 
 _lsl_outlets = {}
 
