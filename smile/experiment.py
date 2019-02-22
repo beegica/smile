@@ -9,6 +9,7 @@
 
 # import main modules
 import os
+import platform as pf
 
 import weakref
 import time
@@ -21,17 +22,13 @@ import kivy.base
 from kivy.utils import platform
 import kivy.clock
 
-<<<<<<< HEAD
-
-=======
-# local imports
->>>>>>> Edited some files
 from .state import Serial, AutoFinalizeState
 from .ref import Ref
 from .clock import clock
 from .log import LogWriter, log2csv
 from .event import event_time
 from .scale import scale
+import smile.version as version
 
 #--EDITED 6.14.18--
 #from state import StateClass
